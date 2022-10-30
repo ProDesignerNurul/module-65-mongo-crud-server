@@ -22,6 +22,15 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run() {
     try{
         const userCollection = client.db('ndeMongoCrud').collection('user');
+
+
+        app.get('/users', async (req, res) => {
+            const query = {}
+            const cursor = userCollection.find(query);
+            const users = await cursor.toArray();
+            res.send(users)
+        })
+
         app.post('/users', async (req, res) => {
             const user = req.body;
             console.log(user)
